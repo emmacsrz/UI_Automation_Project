@@ -1,0 +1,67 @@
+package com.cydeo.tests.day2_locators_getText_getAttribute;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import static com.cydeo.Utilities.WebDriverFactory.*;
+
+public class T2_BackAndForthNav {
+    public static void main(String[] args) throws InterruptedException {
+
+
+        /*
+        TC #2: Back and forth navigation
+1- Open a chrome browser
+2- Go to: https://practice.cydeo.com
+3- Click to A/B Testing from top of the list.
+4- Verify title is:
+Expected: No A/B Test
+5- Go back to home page by using the .back();
+6- Verify title equals:
+Expected: Practice
+         */
+
+        WebDriverManager.chromedriver().setup();
+
+//        1. Open Chrome browser
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        //2- Go to: https://practice.cydeo.com
+        driver.get("https://practice.cydeo.com");
+
+
+        // 3- Click to A/B Testing from top of the list.
+        WebElement abTestLink = driver.findElement(By.linkText("A/B Testing"));
+        abTestLink.click();
+
+        //  4- Verify title is:
+        // Expected: No A/B Test
+        String expectedTitle = "No A/B test";
+        compareTitle(driver, expectedTitle);
+
+Thread.sleep(3000);
+
+
+        lineBreak();
+
+
+        // 5- Go back to home page by using the .back();
+        driver.navigate().back();
+
+        // 6- Verify title equals: Practice
+        expectedTitle = "Practice";
+        compareTitle(driver, expectedTitle);
+
+
+        driver.close();
+        driver.quit();
+    }
+
+
+}
+
+
